@@ -18,3 +18,19 @@ export const deletePost = async (id) => {
   }
   return response.json();
 };
+
+
+export const createPost = async (post)=>{
+  const response = await fetch(BASE_URL,{
+    method: "POST",
+    headers:{
+      "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+  });
+
+  if(!response.ok){
+     throw new Error("Failed to create post");
+  }
+  return response.json();
+}

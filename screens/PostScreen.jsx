@@ -11,8 +11,10 @@ import React, { useState, useEffect } from "react";
 import { useAtom } from "jotai";
 import { postsAtom } from "../atoms/postsAtom";
 import { deletePost, fetchPosts } from "../api/postsApi";
+import { useNavigation } from "@react-navigation/native";
 
 const PostScreen = () => {
+  const navigation = useNavigation();
   const [post, setPosts] = useAtom(postsAtom);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -46,6 +48,14 @@ if(loading) return <ActivityIndicator size='large' color='blue'/>
 
   return (
     <View style={styles.container}>
+     <View style={styles.topContainer}>
+     <TouchableOpacity style={styles.button} onPress={()=>navigation.navigate('addPost')}>
+                <Text style={styles.buttonText}>Add Post</Text>
+            </TouchableOpacity>
+      <TouchableOpacity style={[styles.button, {backgroundColor: 'green', marginTop: 20}]} onPress={()=>navigation.navigate('viewPost')}>
+                <Text style={styles.buttonText}>View Post</Text>
+            </TouchableOpacity>
+     </View>
       <FlatList
         data={post}
         keyExtractor={(item) => item.id.toString()}
@@ -69,6 +79,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+  },
+  topContainer:{
+    marginVertical: 30, 
   },
   post: {
     marginBottom: 16,
